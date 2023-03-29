@@ -5,9 +5,9 @@ import { BsChevronDown } from "react-icons/bs";
 
 const data: MenuData[] = [
   { id: 1, name: "Home", url: "/" },
-  { id: 2, name: "About", url: "/about" },
-  { id: 3, name: "Categories", subMenu: true },
-  { id: 4, name: "Contact", url: "/contact" },
+  { id: 2, name: "Sobre", url: "/sobre" },
+  { id: 3, name: "Categorias", subMenu: true },
+  { id: 4, name: "Contato", url: "/contato" },
 ];
 
 const subMenuData: SubMenuData[] = [
