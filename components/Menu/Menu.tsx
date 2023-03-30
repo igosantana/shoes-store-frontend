@@ -1,34 +1,30 @@
-import { MenuData, SubMenuData } from "@/common/interfaces/menu.interfaces";
+import { CategoriesRes } from "@/common/interfaces/categories.interface";
+import { MenuData } from "@/common/interfaces/menu.interfaces";
 import Link from "next/link";
 import React, { Dispatch, SetStateAction } from "react";
 import { BsChevronDown } from "react-icons/bs";
 
-const data: MenuData[] = [
+const menuData: MenuData[] = [
   { id: 1, name: "Home", url: "/" },
   { id: 2, name: "Sobre", url: "/sobre" },
   { id: 3, name: "Categorias", subMenu: true },
   { id: 4, name: "Contato", url: "/contato" },
 ];
 
-const subMenuData: SubMenuData[] = [
-  { id: 1, name: "Jordan", doc_count: 11 },
-  { id: 2, name: "Sneakers", doc_count: 8 },
-  { id: 3, name: "Running shoes", doc_count: 64 },
-  { id: 4, name: "Football shoes", doc_count: 107 },
-];
-
 type MenuProps = {
   showCatMenu: boolean;
   setShowCatMenu: Dispatch<SetStateAction<boolean>>;
+  data: CategoriesRes;
 };
 
 const Menu: React.FC<MenuProps> = ({
   showCatMenu,
   setShowCatMenu,
+  data,
 }): JSX.Element => {
   return (
     <ul className='hidden md:flex items-center gap-8 font-medium text-black'>
-      {data.map((item) => {
+      {menuData.map((item) => {
         return (
           <React.Fragment key={item.id}>
             {!!item.subMenu ? (
@@ -41,16 +37,18 @@ const Menu: React.FC<MenuProps> = ({
                 <BsChevronDown size={14} />
                 {showCatMenu && (
                   <ul className='bg-white absolute top-6 left-0 min-w-[250px px-1 text-black shadow-lg'>
-                    {subMenuData.map((subMenu) => {
+                    {data.data.map((subMenu) => {
                       return (
                         <Link
                           key={subMenu.id}
-                          href='/'
+                          href={`/category/${subMenu.attributes.slug}`}
                           onClick={() => setShowCatMenu(false)}
                         >
                           <li className='h-12 flex justify-between items-center px-3 hover:bg-black/[0.03] rounded-md'>
-                            {subMenu.name}
-                            <span className='opacity-50 text-sm'>78</span>
+                            {subMenu.attributes.name}
+                            <span className='opacity-50 text-sm'>
+                              {subMenu.attributes.products.data.length}
+                            </span>
                           </li>
                         </Link>
                       );

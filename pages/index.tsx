@@ -1,11 +1,15 @@
+import { ProductRes } from "@/common/interfaces/productRes.interface";
+import { getAllProducts } from "@/common/utils/api";
 import ProductCard from "@/components/Cards/ProductCard";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import HeroBanner from "@/components/HeroBanner";
 import Wrapper from "@/components/Wrapper";
-import { NextPage } from "next";
+import { GetStaticPropsResult, NextPage } from "next";
 
-const IndexPage: NextPage = () => {
+type HomeProps = {
+  products: ProductRes;
+}
+
+const IndexPage: NextPage<HomeProps> = ({ products }) => {
   return (
     <>
       <main>
@@ -23,16 +27,10 @@ const IndexPage: NextPage = () => {
           </div>
 
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-14 px-5 md:px-0'>
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            {products.data?.map((product) => (
+              <ProductCard key={product.id} data={product} />
+            )
+            )}
           </div>
         </Wrapper>
       </main>
@@ -41,3 +39,10 @@ const IndexPage: NextPage = () => {
 };
 
 export default IndexPage;
+
+export async function getStaticProps(): Promise<GetStaticPropsResult<HomeProps>> {
+  const products: ProductRes = await getAllProducts();
+  return {
+    props: { products: products }
+  }
+}

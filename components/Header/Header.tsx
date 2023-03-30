@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import useSWR from 'swr'
 
 import Menu from "../Menu";
 import Wrapper from "../Wrapper";
@@ -9,6 +10,8 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { BsCart } from "react-icons/bs";
 import { BiMenuAltRight } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
+import { CategoriesRes } from "@/common/interfaces/categories.interface";
+import { getAllCategories } from "@/common/utils/api";
 
 const Header: React.FC = (): JSX.Element => {
   const [mobileMenu, setMobileMenu] = useState<boolean>(false);
@@ -33,7 +36,11 @@ const Header: React.FC = (): JSX.Element => {
     return () => {
       window.removeEventListener("scroll", controlNavbar);
     };
-  });
+  }, [lastScrollY]);
+
+  const { data, error } = useSWR<CategoriesRes>('/api/categories?populate=*', getAllCategories);
+  if (!data) return <div>No data yet</div>
+  if (error) return <div>Error: {error}</div>
 
   return (
     <header
@@ -44,10 +51,11 @@ const Header: React.FC = (): JSX.Element => {
           <img src='/logo.svg' className='w-[40px] md:w-[60px]' />
         </Link>
 
-        <Menu showCatMenu={showCatMenu} setShowCatMenu={setShowCatMenu} />
+        <Menu showCatMenu={showCatMenu} setShowCatMenu={setShowCatMenu} data={data} />
 
         {mobileMenu && (
           <MenuMobile
+            data={data}
             showCatMenu={showCatMenu}
             setShowCatMenu={setShowCatMenu}
             setMobileMenu={setMobileMenu}
