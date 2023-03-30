@@ -7,7 +7,7 @@ import { GetStaticPropsResult, NextPage } from "next";
 
 type HomeProps = {
   products: ProductRes;
-}
+};
 
 const IndexPage: NextPage<HomeProps> = ({ products }) => {
   return (
@@ -29,8 +29,7 @@ const IndexPage: NextPage<HomeProps> = ({ products }) => {
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-14 px-5 md:px-0'>
             {products.data?.map((product) => (
               <ProductCard key={product.id} data={product} />
-            )
-            )}
+            ))}
           </div>
         </Wrapper>
       </main>
@@ -40,9 +39,11 @@ const IndexPage: NextPage<HomeProps> = ({ products }) => {
 
 export default IndexPage;
 
-export async function getStaticProps(): Promise<GetStaticPropsResult<HomeProps>> {
-  const products: ProductRes = await getAllProducts();
+export async function getStaticProps(): Promise<
+  GetStaticPropsResult<HomeProps>
+> {
+  const products: ProductRes = await getAllProducts("/api/products?populate=*");
   return {
-    props: { products: products }
-  }
+    props: { products: products },
+  };
 }
