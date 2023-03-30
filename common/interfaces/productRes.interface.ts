@@ -1,5 +1,5 @@
 export interface ProductRes {
-  data?: ProductData[];
+  data: ProductData[];
   meta: Meta;
 }
 
@@ -189,5 +189,4 @@ interface CategoriesAttributes {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-
 }
