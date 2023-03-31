@@ -1,8 +1,22 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Loja de Tênis
 
-## Getting Started
+É um projeto e-commerce de uma loja de tênis, inspirada na loja da nike, onde o usuário pode ver os produtos na página principal. Ainda no menu o usuário poderá escolher a categoria específica na qual desejar. Ao clicar no produto o usuário será redirecionado para página detalhada do produto, podendo escolher o seu tamanho e também podendo visualizar mais detalhes do mesmo, como imagens no lado esquerdo e uma breve descrição do tênis escolhido.
+Assim, se o usuário gostar do modelo ele pode enviar o produto para o carrinho. No carrinho o usuário pode escolher a quantidade, tamanho ou se preferir pode remover o produto do carrinho.
+Logo após clicar em chekout o usuário será redirecionado para uma página onde poderá realizar o pagamento do produto. Finalizando a compra o usuário será redirecionado para uma página de sucesso ou falha se houver algum impedimento.
 
-First, run the development server:
+## Ferramentas
+
+- Nextjs com typescript
+  - React-icons para os ícones
+  - React-carousel para o carrosel
+- Tailwind para a estilização
+- Axios para http request
+- Redux com Redux Toolkit para a funcionalidade do carrinho
+- Stripe para a página de pagamento dos produtos
+
+## Para rodar localmente
+
+Após instalar as dependências:
 
 ```bash
 npm run dev
@@ -12,27 +26,4 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Deploy no Vercel

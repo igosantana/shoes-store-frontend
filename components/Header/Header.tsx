@@ -13,6 +13,7 @@ import { VscChromeClose } from "react-icons/vsc";
 import { CategoriesRes } from "@/common/interfaces/categories.interface";
 import { getAllCategories } from "@/common/utils/api";
 import { RootState } from "@/common/interfaces/redux.interfaces";
+import Image from "next/image";
 
 const Header: React.FC = (): JSX.Element => {
   const [mobileMenu, setMobileMenu] = useState<boolean>(false);
@@ -42,7 +43,7 @@ const Header: React.FC = (): JSX.Element => {
     return () => {
       window.removeEventListener("scroll", controlNavbar);
     };
-  }, [lastScrollY]);
+  }, [lastScrollY, controlNavbar]);
 
   useEffect(() => {
     fetchCategories();
@@ -60,7 +61,13 @@ const Header: React.FC = (): JSX.Element => {
     >
       <Wrapper className='h-[60px] flex justify-between items-center'>
         <Link href='/'>
-          <img src='/logo.svg' className='w-[40px] md:w-[60px]' />
+          <Image
+            src='/logo.svg'
+            width={40}
+            height={40}
+            className='w-[40px] md:w-[60px]'
+            alt='Logo'
+          />
         </Link>
 
         <Menu
@@ -102,7 +109,7 @@ const Header: React.FC = (): JSX.Element => {
           {/* Icon end */}
 
           {/* Menu Icon Start */}
-          <div className='w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative'>
+          <div className='w-8 md:w-12 h-8 md:h-12 md:hidden rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative'>
             {mobileMenu ? (
               <VscChromeClose
                 className='text-[16px]'
