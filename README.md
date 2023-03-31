@@ -29,3 +29,5 @@ pnpm dev
 ```
 
 ## Deploy no Vercel
+
+[Loja](https://shoes-store-frontend.vercel.app/)
