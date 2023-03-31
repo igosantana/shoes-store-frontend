@@ -23,7 +23,10 @@ const Menu: React.FC<MenuProps> = ({
   data,
 }): JSX.Element => {
   return (
-    <ul className='hidden md:flex items-center gap-8 font-medium text-black'>
+    <ul
+      id='navbar'
+      className='hidden md:flex items-center gap-8 font-medium text-black'
+    >
       {menuData.map((item) => {
         return (
           <React.Fragment key={item.id}>
@@ -36,7 +39,10 @@ const Menu: React.FC<MenuProps> = ({
                 {item.name}
                 <BsChevronDown size={14} />
                 {showCatMenu && (
-                  <ul className='bg-white absolute top-6 left-0 min-w-[250px] px-1 text-black shadow-lg'>
+                  <ul
+                    className='bg-white absolute top-6 left-0 min-w-[250px] px-1 text-black shadow-lg'
+                    id='submenu'
+                  >
                     {data.data.map((subMenu) => {
                       return (
                         <Link
