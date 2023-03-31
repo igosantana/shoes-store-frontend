@@ -1,5 +1,6 @@
 import { CategoriesRes } from "../interfaces/categories.interface";
 import { ProductRes } from "../interfaces/productRes.interface";
+import { CartSlice } from "../interfaces/redux.interfaces";
 import { API_URL, STRAPI_API_TOKEN } from "./urls";
 import axios from "axios";
 
@@ -15,4 +16,16 @@ const getAllCategories = async (endpoint: string): Promise<CategoriesRes> => {
   return response.data;
 };
 
-export { getAllProducts, getAllCategories };
+const makePaymentRequest = async (
+  endpoint: string,
+  payload: { products: CartSlice[] }
+) => {
+  const response = await axios.post(`${API_URL}${endpoint}`, payload, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response.data;
+};
+
+export { getAllProducts, getAllCategories, makePaymentRequest };

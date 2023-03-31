@@ -47,6 +47,7 @@ const CartItem: React.FC<CartSlice> = (data): JSX.Element => {
               <select
                 className='hover:text-black'
                 onChange={(e: ChangeEvent) => updateCartItem(e, "selectedSize")}
+                defaultValue={data.selectedSize}
               >
                 {data.attributes.size.data.map((s, i) => {
                   return (
@@ -68,10 +69,11 @@ const CartItem: React.FC<CartSlice> = (data): JSX.Element => {
               <select
                 className='hover:text-black'
                 onChange={(e: ChangeEvent) => updateCartItem(e, "quantity")}
+                defaultValue={data.quantity}
               >
                 {Array.from({ length: 10 }, (_, i) => i + 1).map((q, i) => {
                   return (
-                    <option value={q} selected={data.quantity === q}>
+                    <option key={i} value={q} selected={data.quantity === q}>
                       {q}
                     </option>
                   );

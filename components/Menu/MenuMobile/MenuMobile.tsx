@@ -1,5 +1,5 @@
 import { CategoriesRes } from "@/common/interfaces/categories.interface";
-import { MenuData, SubMenuData } from "@/common/interfaces/menu.interfaces";
+import { MenuData } from "@/common/interfaces/menu.interfaces";
 import Link from "next/link";
 import React, { Dispatch, SetStateAction } from "react";
 import { BsChevronDown } from "react-icons/bs";

@@ -3,7 +3,7 @@ import { getAllProducts } from "@/common/utils/api";
 import ProductCard from "@/components/Cards/ProductCard";
 import HeroBanner from "@/components/HeroBanner";
 import Wrapper from "@/components/Wrapper";
-import { GetStaticPropsResult, NextPage } from "next";
+import { GetStaticProps, GetStaticPropsResult, NextPage } from "next";
 
 type HomeProps = {
   products: ProductRes;
@@ -39,11 +39,11 @@ const IndexPage: NextPage<HomeProps> = ({ products }) => {
 
 export default IndexPage;
 
-export async function getStaticProps(): Promise<
+export const getStaticProps: GetStaticProps = async (): Promise<
   GetStaticPropsResult<HomeProps>
-> {
+> => {
   const products: ProductRes = await getAllProducts("/api/products?populate=*");
   return {
     props: { products: products },
   };
-}
+};

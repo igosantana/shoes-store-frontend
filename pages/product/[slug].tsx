@@ -8,7 +8,7 @@ import { ParsedUrlQuery } from "querystring";
 import { useState } from "react";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

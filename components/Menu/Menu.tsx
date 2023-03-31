@@ -36,7 +36,7 @@ const Menu: React.FC<MenuProps> = ({
                 {item.name}
                 <BsChevronDown size={14} />
                 {showCatMenu && (
-                  <ul className='bg-white absolute top-6 left-0 min-w-[250px px-1 text-black shadow-lg'>
+                  <ul className='bg-white absolute top-6 left-0 min-w-[250px] px-1 text-black shadow-lg'>
                     {data.data.map((subMenu) => {
                       return (
                         <Link
@@ -47,7 +47,7 @@ const Menu: React.FC<MenuProps> = ({
                           <li className='h-12 flex justify-between items-center px-3 hover:bg-black/[0.03] rounded-md'>
                             {subMenu.attributes.name}
                             <span className='opacity-50 text-sm'>
-                              {subMenu.attributes.products.data.length}
+                              ({subMenu.attributes.products.data.length})
                             </span>
                           </li>
                         </Link>
