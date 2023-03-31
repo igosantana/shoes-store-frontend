@@ -1,6 +1,6 @@
 # Loja de Tênis
 
-É um projeto e-commerce de uma loja de tênis, inspirada na loja da nike, onde o usuário pode ver os produtos na página principal. Ainda no menu o usuário poderá escolher a categoria específica na qual desejar. Ao clicar no produto o usuário será redirecionado para página detalhada do produto, podendo escolher o seu tamanho e também podendo visualizar mais detalhes do mesmo, como imagens no lado esquerdo e uma breve descrição do tênis escolhido.
+É um projeto e-commerce de uma loja de tênis, inspirada na loja da [nike](https://www.nike.com/), onde o usuário pode ver os produtos na página principal. Ainda no menu o usuário poderá escolher a categoria específica na qual desejar. Ao clicar no produto o usuário será redirecionado para página detalhada do produto, podendo escolher o seu tamanho e também podendo visualizar mais detalhes do mesmo, como imagens no lado esquerdo e uma breve descrição do tênis escolhido.
 
 Assim, se o usuário gostar do modelo ele pode enviar o produto para o carrinho. No carrinho o usuário pode escolher a quantidade, tamanho ou se preferir pode remover o produto do carrinho.
 
