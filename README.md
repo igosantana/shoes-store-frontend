@@ -15,6 +15,7 @@ Logo após clicar em chekout o usuário será redirecionado para uma página ond
 - Axios para http request
 - Redux com Redux Toolkit para a funcionalidade do carrinho
 - Stripe para a página de pagamento dos produtos
+- Cypress para testes de integração End-to-End
 
 ## Para rodar localmente
 
