@@ -1,17 +1,16 @@
-import {
-  ProductData,
-  ProductRes,
-} from "@/common/interfaces/productRes.interface";
+import { ProductRes } from "@/common/interfaces/productRes.interface";
 import { getAllProducts } from "@/common/utils/api";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import ProductDetailCarousel from "@/components/Product/ProductDetailsCarousel";
 import Wrapper from "@/components/Wrapper";
+import { addToCart } from "@/redux/store/cartSlice";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { useState } from "react";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { useSelector, useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface IParams extends ParsedUrlQuery {
   slug: string;
@@ -22,11 +21,26 @@ type ProductDetailsProps = {
 };
 
 const ProductDetails: NextPage<ProductDetailsProps> = ({ product }) => {
-  const [selectSize, setSelectSize] = useState<string>("");
+  const [selectedSize, setSelectSize] = useState<string>("");
   const [showError, setShowError] = useState<boolean>(false);
+  const dispatch = useDispatch();
   const p = product.data[0].attributes;
+
+  const notify = (): void => {
+    toast.success("Sucesso. Dê uma olhada no carrinho!", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
   return (
     <>
+      <ToastContainer />
       <div className='w-full md:py-20'>
         <Wrapper>
           <div className='flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]'>
@@ -38,9 +52,9 @@ const ProductDetails: NextPage<ProductDetailsProps> = ({ product }) => {
 
             {/* right column start */}
             <div className='flex-[1] py-3 gap-10'>
-              <h1 className='text-[34px] font-semibold mb-2'>{p.name}</h1>
-              <span className='text-lg font-semibold mb-5'>{p.subtitle}</span>
-              <p className='text-lg font-semibold'>{`Preço: R$${p.price}`}</p>
+              <div className='text-[34px] font-semibold mb-2'>{p.name}</div>
+              <div className='text-lg font-semibold mb-5'>{p.subtitle}</div>
+              <div className='text-lg font-semibold'>{`Preço: R$${p.price}`}</div>
 
               <div className='mb-10'>
                 <div className='flex justify-between mb-2'>
@@ -57,7 +71,7 @@ const ProductDetails: NextPage<ProductDetailsProps> = ({ product }) => {
                         s.enabled
                           ? "hover:border-black cursor-pointer"
                           : "cursor-not-allowed bg-black/[0.1] opacity-50"
-                      } ${selectSize === s.size ? "border-black" : ""}`}
+                      } ${selectedSize === s.size ? "border-black" : ""}`}
                       onClick={() => {
                         setSelectSize(s.size);
                         setShowError(false);
@@ -73,12 +87,22 @@ const ProductDetails: NextPage<ProductDetailsProps> = ({ product }) => {
                 <button
                   className='w-full py-4 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75'
                   onClick={() => {
-                    if (!selectSize) {
+                    if (!selectedSize) {
                       setShowError(true);
                       document.getElementById("sizesGrid")?.scrollIntoView({
                         block: "center",
                         behavior: "smooth",
                       });
+                    } else {
+                      dispatch(
+                        addToCart({
+                          ...product.data[0],
+                          selectedSize,
+                          oneQuantityPrice: p.price,
+                          quantity: 0,
+                        })
+                      );
+                      notify();
                     }
                   }}
                 >
@@ -91,9 +115,9 @@ const ProductDetails: NextPage<ProductDetailsProps> = ({ product }) => {
                 </button>
 
                 <h3 className='text-lg font-bold mb-5'>Detalhe do Produto</h3>
-                <p className='text-md mb-5 text-justify'>
+                <div className='text-md mb-5 text-justify'>
                   <ReactMarkdown>{p.description}</ReactMarkdown>
-                </p>
+                </div>
               </div>
             </div>
             {/* right column end */}

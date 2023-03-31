@@ -5,10 +5,10 @@ export interface ProductRes {
 
 export interface ProductData {
   id: number;
-  attributes: Attributes;
+  attributes: ProductAttributes;
 }
 
-export interface Attributes {
+export interface ProductAttributes {
   name: string;
   subtitle: string;
   price: number;

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import useSWR from 'swr'
+import { useSelector } from "react-redux";
 
 import Menu from "../Menu";
 import Wrapper from "../Wrapper";
@@ -12,12 +12,17 @@ import { BiMenuAltRight } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 import { CategoriesRes } from "@/common/interfaces/categories.interface";
 import { getAllCategories } from "@/common/utils/api";
+import { RootState } from "@/common/interfaces/redux.interfaces";
 
 const Header: React.FC = (): JSX.Element => {
   const [mobileMenu, setMobileMenu] = useState<boolean>(false);
   const [showCatMenu, setShowCatMenu] = useState<boolean>(false);
   const [show, setShow] = useState<string>("translate-y-0");
   const [lastScrollY, setLastScrollY] = useState<number>(0);
+  const [categories, setCategories] = useState<CategoriesRes>({
+    data: [],
+    meta: { pagination: { page: 0, pageCount: 0, pageSize: 0, total: 0 } },
+  });
 
   const controlNavbar = (): void => {
     if (window.scrollY > 200) {
@@ -31,6 +36,7 @@ const Header: React.FC = (): JSX.Element => {
     }
     setLastScrollY(window.scrollY);
   };
+
   useEffect(() => {
     window.addEventListener("scroll", controlNavbar);
     return () => {
@@ -38,10 +44,16 @@ const Header: React.FC = (): JSX.Element => {
     };
   }, [lastScrollY]);
 
-  const { data, error } = useSWR<CategoriesRes>('/api/categories?populate=*', getAllCategories);
-  if (!data) return <div>No data yet</div>
-  if (error) return <div>Error: {error}</div>
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
+  const fetchCategories = async (): Promise<void> => {
+    const response = await getAllCategories("/api/categories?populate=*");
+    setCategories(response);
+  };
+
+  const cart = useSelector((state: RootState) => state.cart);
   return (
     <header
       className={`w-full h-[50px] md:h-[80px] bg-white flex items-center justify-between z-20 sticky top-0 transition-transform duration-300 ${show}`}
@@ -51,11 +63,15 @@ const Header: React.FC = (): JSX.Element => {
           <img src='/logo.svg' className='w-[40px] md:w-[60px]' />
         </Link>
 
-        <Menu showCatMenu={showCatMenu} setShowCatMenu={setShowCatMenu} data={data} />
+        <Menu
+          showCatMenu={showCatMenu}
+          setShowCatMenu={setShowCatMenu}
+          data={categories}
+        />
 
         {mobileMenu && (
           <MenuMobile
-            data={data}
+            data={categories}
             showCatMenu={showCatMenu}
             setShowCatMenu={setShowCatMenu}
             setMobileMenu={setMobileMenu}
@@ -76,9 +92,11 @@ const Header: React.FC = (): JSX.Element => {
           <Link href='/cart'>
             <div className='w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative'>
               <BsCart className='text-[15px] md:text-[20px]' />
-              <div className='h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] mc:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]'>
-                5
-              </div>
+              {cart.length > 0 && (
+                <div className='h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] mc:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]'>
+                  {cart.length}
+                </div>
+              )}
             </div>
           </Link>
           {/* Icon end */}
