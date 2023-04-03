@@ -47,7 +47,7 @@ const Header: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [categories]);
 
   const fetchCategories = async (): Promise<void> => {
     const response = await getAllCategories("/api/categories?populate=*");
